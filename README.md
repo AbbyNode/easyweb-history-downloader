@@ -1,6 +1,6 @@
 # EasyWeb History Downloader
 
-This is a userscript for downloading your transaction history from TD EasyWeb (TD Canada Trust online banking).
+This is a userscript for downloading your transaction history from TD EasyWeb.
 
 ## Features
 - Downloads your account transaction history as a CSV file.
@@ -8,9 +8,9 @@ This is a userscript for downloading your transaction history from TD EasyWeb (T
 
 ## Installation
 1. **Install a userscript manager**
-   - [Tampermonkey](https://www.tampermonkey.net/) (recommended)
-   - [Violentmonkey](https://violentmonkey.github.io/)
+   - [Violentmonkey](https://violentmonkey.github.io/) (recommended)
    - [Greasemonkey](https://www.greasespot.net/)
+   - [Tampermonkey](https://www.tampermonkey.net/)
 
 2. **Install the script**
    - Download or copy the contents of `easyweb-history-downloader.user.js` from this repository.
@@ -32,6 +32,3 @@ This is a userscript for downloading your transaction history from TD EasyWeb (T
 ## Reference
 - See the `reference/` folder for sample HTML files and additional documentation.
 - See `INFO.md` for more details about the script's logic and development notes.
-
-## License
-MIT License
