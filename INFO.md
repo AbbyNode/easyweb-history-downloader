@@ -16,9 +16,18 @@ This node contains the DATE of the statement row.
 <td role="cell" mat-cell="" class="mat-cell cdk-cell cdk-column-loadDate mat-column-loadDate ng-tns-c211-17 ng-star-inserted uf-table-data-cell uf-element-spacing uf-element-spacing-data hide-cell-when-xs" style="flex: 0 0 70px; white-space: nowrap; width: 70px; min-width: 70px; max-width: 70px;"><!---->Jul 3, 2025<!----><!----></td>
 ```
 
+Once a statement row is clicked, an overlay appears with the statement details.
+This module contains the download button, and can be closed after.
+
 
 This node is the download button for the statement.
 
 ```html
 <button mat-icon-button="" type="button" class="mat-focus-indicator uf-icon-button-container mat-icon-button mat-button-base" aria-label="Download"><span class="mat-button-wrapper"><tduf-icon type="clear" class="uf-icon-auto-color uf-icon-element uf-theme-emerald"><span class="uf-icon-container uf-clear uf-normal"><!----><mat-icon role="img" class="mat-icon notranslate uf-icon mat-icon-no-color" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="download"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><rect width="16" height="16" fill="none"></rect><g transform="translate(0 1)"><path d="M13.1,6.6l-1-1L8.7,9V0H7.3V9L3.9,5.6l-1,1L8,11.7Z" fill="#008a00"></path><path d="M14.6,10.6V13H1.4V10.6H0v3.8H16V10.6Z" fill="#008a00"></path></g></svg></mat-icon><!----></span></tduf-icon><!----></span><span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span><span class="mat-button-focus-overlay"></span></button>
+```
+
+This node is the close button for the statement details overlay.
+
+```html
+<button mat-icon-button="" type="button" class="mat-focus-indicator uf-icon-button-container mat-icon-button mat-button-base" aria-label="Close overlay"><span class="mat-button-wrapper"><tduf-icon type="clear" class="uf-icon-element uf-theme-emerald"><span class="uf-icon-container uf-clear uf-normal"><!----><mat-icon role="img" class="mat-icon notranslate uf-icon mat-icon-no-color" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="closeX"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><rect width="16" height="16" fill="none"></rect><path d="M10.537,11.749,6,7.212,1.463,11.749A.857.857,0,1,1,.251,10.537L4.788,6,.251,1.463A.857.857,0,0,1,1.463.251L6,4.788,10.537.251a.857.857,0,1,1,1.211,1.212L7.212,6l4.537,4.537a.857.857,0,1,1-1.211,1.211Z" transform="translate(2 2)" fill="#555"></path></svg></mat-icon><!----></span></tduf-icon><!----></span><span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span><span class="mat-button-focus-overlay"></span></button>
 ```

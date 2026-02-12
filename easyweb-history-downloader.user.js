@@ -74,20 +74,11 @@
 					console.warn('No statement rows found for year:', year.text);
 					continue;
 				}
-				const statements = rows.map(row => {
-					let downloadBtn = null;
-					const tr = row.closest('tr');
-					if (tr) {
-						downloadBtn = tr.querySelector('button[aria-label="Download"]');
-					}
-					if (!downloadBtn) {
-						downloadBtn = row.parentElement.querySelector('button[aria-label="Download"]');
-					}
-					return {
-						date: row.innerText.trim(),
-						downloadBtn
-					};
-				}).filter(s => s.downloadBtn);
+				// Instead of finding downloadBtn now, just collect rows
+				const statements = rows.map(row => ({
+					date: row.innerText.trim(),
+					row
+				}));
 				// In debug mode, only download one statement per year, and stop after 2 total
 				let statementsToDownload = statements;
 				if (debugMode) {
@@ -96,9 +87,26 @@
 				for (const s of statementsToDownload) {
 					if (debugMode && totalDownloaded >= 2) break;
 					try {
-						s.downloadBtn.click();
-						await new Promise(r => setTimeout(r, 1500));
-						totalDownloaded++;
+						// Click the statement row to open overlay
+                        console.log('Clicking statement row for date:', s.date);
+						s.row.click();
+						// Wait for overlay and download button
+                        console.log('Waiting for download button for statement:', s.date);
+						await waitForElement('button[aria-label="Download"]', 5000);
+						const downloadBtn = document.querySelector('button[aria-label="Download"]');
+						if (downloadBtn) {
+							downloadBtn.click();
+							totalDownloaded++;
+                            // Wait a bit for download
+                            await new Promise(r => setTimeout(r, 1500));
+						} else {
+							console.warn('Download button not found for statement:', s.date);
+						}
+						// Close overlay
+						const closeBtn = document.querySelector('button[aria-label="Close overlay"]');
+						if (closeBtn) closeBtn.click();
+						// Wait for overlay to close
+						await new Promise(r => setTimeout(r, 800));
 					} catch (e) {
 						console.warn('Failed to download statement:', s.date, e);
 					}
