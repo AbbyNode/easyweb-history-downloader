@@ -103,8 +103,32 @@
 		}
 	}
 
-	// Start script after DOM is ready
+	// Add floating button to trigger run
 	window.addEventListener('load', () => {
-		run();
+		const btn = document.createElement('button');
+		btn.textContent = 'Download All Statements';
+		btn.style.position = 'fixed';
+		btn.style.bottom = '24px';
+		btn.style.right = '24px';
+		btn.style.zIndex = 9999;
+		btn.style.padding = '12px 20px';
+		btn.style.background = '#1976d2';
+		btn.style.color = '#fff';
+		btn.style.border = 'none';
+		btn.style.borderRadius = '6px';
+		btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+		btn.style.fontSize = '16px';
+		btn.style.cursor = 'pointer';
+		btn.addEventListener('click', async () => {
+			btn.disabled = true;
+			btn.textContent = 'Running...';
+			// await run();
+			btn.textContent = 'Done!';
+			setTimeout(() => {
+				btn.textContent = 'Download All Statements';
+				btn.disabled = false;
+			}, 2000);
+		});
+		document.body.appendChild(btn);
 	});
 })();
