@@ -56,9 +56,10 @@
 	}
 
 	// Main runner
-	async function run() {
+	async function run(debugMode) {
 		try {
 			const years = await getYearOptions();
+			let totalDownloaded = 0;
 			for (const year of years) {
 				try {
 					await selectYear(year.element);
@@ -87,16 +88,24 @@
 						downloadBtn
 					};
 				}).filter(s => s.downloadBtn);
-				for (const s of statements) {
+				// In debug mode, only download one statement per year, and stop after 2 total
+				let statementsToDownload = statements;
+				if (debugMode) {
+					statementsToDownload = statements.slice(0, 1);
+				}
+				for (const s of statementsToDownload) {
+					if (debugMode && totalDownloaded >= 2) break;
 					try {
 						s.downloadBtn.click();
 						await new Promise(r => setTimeout(r, 1500));
+						totalDownloaded++;
 					} catch (e) {
 						console.warn('Failed to download statement:', s.date, e);
 					}
 				}
 				// Wait before switching to next year
 				await new Promise(r => setTimeout(r, 2000));
+				if (debugMode && totalDownloaded >= 2) break;
 			}
 		} catch (e) {
 			console.error('Script error:', e);
@@ -105,6 +114,30 @@
 
 	// Add floating button to trigger run
 	window.addEventListener('load', () => {
+		// Create DEBUG checkbox
+		const debugLabel = document.createElement('label');
+		debugLabel.style.position = 'fixed';
+		debugLabel.style.bottom = '60px';
+		debugLabel.style.right = '24px';
+		debugLabel.style.zIndex = 9999;
+		debugLabel.style.background = '#fff';
+		debugLabel.style.padding = '6px 12px';
+		debugLabel.style.borderRadius = '6px';
+		debugLabel.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)';
+		debugLabel.style.fontSize = '15px';
+		debugLabel.style.display = 'flex';
+		debugLabel.style.alignItems = 'center';
+		debugLabel.style.gap = '8px';
+		debugLabel.style.userSelect = 'none';
+
+		const debugCheckbox = document.createElement('input');
+		debugCheckbox.type = 'checkbox';
+		debugCheckbox.id = 'ewhd-debug';
+		debugLabel.appendChild(debugCheckbox);
+		debugLabel.appendChild(document.createTextNode('DEBUG'));
+
+		document.body.appendChild(debugLabel);
+
 		const btn = document.createElement('button');
 		btn.textContent = 'Download All Statements';
 		btn.style.position = 'fixed';
@@ -122,7 +155,9 @@
 		btn.addEventListener('click', async () => {
 			btn.disabled = true;
 			btn.textContent = 'Running...';
-			// await run();
+			const debugCheckbox = document.getElementById('ewhd-debug');
+			const debugMode = debugCheckbox && debugCheckbox.checked;
+			await run(debugMode);
 			btn.textContent = 'Done!';
 			setTimeout(() => {
 				btn.textContent = 'Download All Statements';
