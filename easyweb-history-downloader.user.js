@@ -4,7 +4,7 @@
 // @version      1.0
 // @description  Download all statements for all years from EasyWeb
 // @author       You
-// @match        *://*/*
+// @match        https://easyweb.td.com/waw/webui/acct/#/
 // @grant        none
 // ==/UserScript==
 
