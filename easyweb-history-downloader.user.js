@@ -90,9 +90,13 @@
 						// Click the statement row to open overlay
                         console.log('Clicking statement row for date:', s.date);
 						s.row.click();
+                        
 						// Wait for overlay and download button
                         console.log('Waiting for download button for statement:', s.date);
 						await waitForElement('button[aria-label="Download"]', 5000);
+                        // Minimal wait to ensure file is ready
+                        await new Promise(r => setTimeout(r, 2000));
+
 						const downloadBtn = document.querySelector('button[aria-label="Download"]');
 						if (downloadBtn) {
 							downloadBtn.click();
